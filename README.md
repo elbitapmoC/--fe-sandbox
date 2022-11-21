@@ -44,4 +44,3 @@ Design concept [https://www.figma.com/file/2igSAZhrkvnMUbUEgapIv5/Front-end-hiri
   - Users should be able to move branches to the next column called “Ready for Review”
   - Users should be able to move them to the final column, “Ready to Merge”.
     - (State of the kanban should only be persisted locally in the browser.)
-# --fe-sandbox

@@ -1,0 +1,79 @@
+/* Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Fonts */
+@font-face {
+  font-family: 'Inter';
+  src: url('../public/fonts/Inter-SemiBold.ttf');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../public/fonts/Inter-Regular.ttf');
+  font-weight: 400;
+}
+
+/* Colors - Scheme | Variables so user can toggle. */
+:root{
+  --color-shade-1: #F2F2F2;
+  --color-shade-2: #B0B0B0;
+  --color-shade-3: #383838;
+  --color-shade-4: #222;
+  --color-shade-5: #151515;
+  --color-shade-red: #E75B4F;
+}
+
+[data-theme='dark']{
+  --color-shade-1: #151515;
+  --color-shade-2: #515151;
+  --color-shade-3: #D1D1D1;
+  --color-shade-4: #EEEEEE;
+  --color-shade-5: #FFF;
+  --color-shade-red: #D62617;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.0125em;
+  color: var(--color-shade-1);
+  background-color: var(--color-shade-5);
+}
+
+.main {
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1140px;
+  min-height: 90vh;
+  display: flex;
+  margin: auto;
+  flex: 1;
+}
+
+.heading {
+  font-family: 'Inter';
+  font-size: 48px;
+  line-height: 100%;
+  letter-spacing: -0.05em;
+}
+
+.regular {
+  font-size: 14px;
+  line-height: 160%;
+}
+
+.subtitle {
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.grid--1fr--auto{
+  grid-template-columns: 1fr auto;
+}
+
+.bb-1{
+  border-bottom: 1px solid var(--color-shade-1);
+}
