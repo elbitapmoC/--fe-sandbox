@@ -3,11 +3,13 @@
 import Nav from './nav';
 import Title from './title';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import ToggleLighting from './(icons)/toggleLighting';
 
 export default function HomePage() {
+  const router = useRouter();
   const [value, setValue] = useState('');
   const [error, setError] = useState(false);
-  const [data, setData] = useState();
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -17,15 +19,15 @@ export default function HomePage() {
     try {
       const response = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
       const json = await response.json();
-      if (json.message === "Not Found") {
+      if (json.message) {
         setError(true);
       } else {
         setError(false);
-        setData(json);
+        router.push(`kanban/${owner}/${repo}`);
       }
     } catch (err) {
-      setError(true);
       console.error('🦄: ', err)
+      setError(true);
     }
   }
 
@@ -39,28 +41,19 @@ export default function HomePage() {
 
   return (
     <main className="main">
-      <style jsx>{
-        `
-        .button{
-          background-color: var(--color-shade-4);
-          color: var(--color-shade-1);
-        }
-
-        .text-red {
-          color: var(--color-shade-red);
-        }
-        `
-      }
-      </style>
+      <ToggleLighting />
       <section className="w-full grid grid-cols-3 gap-4">
         <Nav />
         <aside className="col-span-2"><Title text="Start by pasting the repository URL" /></aside>
         <form className="grid grid--1fr--auto col-start-2 col-span-2 mt-24" onSubmit={handleSubmit}>
           <input placeholder='https://' type="url" className='py-2 bg-transparent bb-1' onChange={handleChange} />
           <input type="submit" value='Submit' className='ml-2.5 py-2 px-4 button rounded' />
-          {error === true ? <p className='pt-5 text-red'>Oops! Something went wrong. Try again.</p> : null}
+          {error === true ? <p className='pt-5 red'>Oops! Something went wrong. Try again.</p> : null}
         </form>
       </section>
     </main>
   )
 }
+
+
+

@@ -18,21 +18,21 @@
 
 /* Colors - Scheme | Variables so user can toggle. */
 :root{
-  --color-shade-1: #F2F2F2;
-  --color-shade-2: #B0B0B0;
-  --color-shade-3: #383838;
-  --color-shade-4: #222;
-  --color-shade-5: #151515;
-  --color-shade-red: #E75B4F;
-}
-
-[data-theme='dark']{
   --color-shade-1: #151515;
   --color-shade-2: #515151;
   --color-shade-3: #D1D1D1;
   --color-shade-4: #EEEEEE;
   --color-shade-5: #FFF;
   --color-shade-red: #D62617;
+}
+
+[data-theme='dark']{
+  --color-shade-1: #F2F2F2;
+  --color-shade-2: #B0B0B0;
+  --color-shade-3: #383838;
+  --color-shade-4: #222;
+  --color-shade-5: #151515;
+  --color-shade-red: #E75B4F;
 }
 
 body {
@@ -53,20 +53,26 @@ body {
   flex: 1;
 }
 
-.heading {
+.font-lg {
   font-family: 'Inter';
   font-size: 48px;
   line-height: 100%;
   letter-spacing: -0.05em;
+  color: var(--color-shade-1);
 }
 
-.regular {
-  font-size: 14px;
+.font-rg {
+  font-size: 1rem; /* 16px */
+  line-height: 140%;
+}
+
+.font-sm {
+  font-size: 0.875rem; /* 14px */
   line-height: 160%;
 }
 
-.subtitle {
-  font-size: 12px;
+.font-xs {
+  font-size: 0.75rem; /* 12px */
   line-height: 15px;
 }
 
@@ -76,4 +82,17 @@ body {
 
 .bb-1{
   border-bottom: 1px solid var(--color-shade-1);
+}
+
+.red {
+  color: var(--color-shade-red);
+}
+
+.shade-2 {
+  color: var(--color-shade-2);
+}
+
+.button{
+  background-color: var(--color-shade-4);
+  color: var(--color-shade-1);
 }

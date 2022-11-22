@@ -1,8 +1,6 @@
-import React from 'react'
-
 const Title = ({ text }: { text: string }) => {
   return (
-    <p className='max-w-md heading'>{text}</p>
+    <p className='max-w-md font-lg'>{text}</p>
   )
 }
 
