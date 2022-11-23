@@ -53,6 +53,17 @@ body {
   flex: 1;
 }
 
+.secondary {
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1140px;
+  min-height: 30vh;
+  display: flex;
+  margin: auto;
+  flex: 1;
+}
+
 .font-lg {
   font-family: 'Inter';
   font-size: 48px;
@@ -92,7 +103,17 @@ body {
   color: var(--color-shade-2);
 }
 
-.button{
+.button {
   background-color: var(--color-shade-4);
   color: var(--color-shade-1);
+  transition: all .3s ease-in-out;
+}
+
+.button:hover {
+  background-color: var(--color-shade-3);
+  cursor: pointer;
+}
+
+ul {
+  min-height: 96px;
 }
