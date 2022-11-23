@@ -12,9 +12,9 @@ type Props = {
 
 const ReactQueryWrapper = ({ children }: Props) => (
   <QueryClientProvider client={queryClient}>
-    {/* <ThemeProvider defaultTheme='dark' > */}
-    {children}
-    {/* </ThemeProvider> */}
+    <ThemeProvider defaultTheme='dark' >
+      {children}
+    </ThemeProvider>
     <ReactQueryDevtools initialIsOpen />
   </QueryClientProvider>
 )
