@@ -19,6 +19,7 @@ Your requirements are to build an application that shows an overview of the acti
   - Users should be able to move branches to the next column called “Ready for Review”
   - Users should be able to move them to the final column, “Ready to Merge”.
     - (State of the kanban should only be persisted locally in the browser.)
+
 ![image 1](https://user-images.githubusercontent.com/11306948/203875158-b25cabdd-3802-4819-83db-c49646f7a34d.jpg)
 
 
