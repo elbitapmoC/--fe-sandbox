@@ -1,5 +1,5 @@
 {
-  "name": "ph",
+  "name": "Code Sandbox",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,7 +15,6 @@
     "eslint-config-next": "^13.0.3",
     "next": "^13.0.3",
     "next-themes": "^0.2.1",
-    "pocketbase": "^0.7.4",
     "prettier": "^2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.13",
     "react": "^18.2.0",
