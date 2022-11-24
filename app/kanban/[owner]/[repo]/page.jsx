@@ -1,5 +1,6 @@
 'use client';
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DragDropContext } from "react-beautiful-dnd";
+import uuid from 'react-uuid';
 
 import Back from "../../../(icons)/back";
 import Stargazers from "../../../(icons)/stargazers";
@@ -11,13 +12,6 @@ import initialData from "../../../initial-data";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
-
-type PageProps = {
-  params: {
-    owner: string,
-    repo: string
-  }
-}
 
 const reorderColumnList = (sourceCol, startIndex, endIndex) => {
   const newTaskIds = Array.from(sourceCol.taskIds);
@@ -32,7 +26,7 @@ const reorderColumnList = (sourceCol, startIndex, endIndex) => {
   return newColumn;
 };
 
-export default function Page({ params }: PageProps) {
+export default function Page({ params }) {
   const { owner, repo } = params;
   const [state, setState] = useState(initialData);
 
@@ -65,23 +59,31 @@ export default function Page({ params }: PageProps) {
   if (errorRepo) return 'An error has occurred: ' + errorRepo;
 
   if (loadingRepoBranches) return 'Loading Branches...';
-  if (errorRepoBranches)
-    return 'An error has occurred: ' + errorRepoBranches;
+  if (errorRepoBranches) return 'An error has occurred: ' + errorRepoBranches;
 
-  const { id, name, description, stargazers_count } = repoData;
-
-
-  const onDragEnd = (result) => {
+  const { name, description, stargazers_count } = repoData;
+  const initializeBranches = () => {
+    branchesData.forEach((branch) => {
+      const id = uuid();
+      branch.id = id;
+      initialData.tasks[id] = branch;
+      initialData.columns["column-1"].taskIds.push(id);
+    });
+  }
+  if(branchesData){
+    initializeBranches();
+  }
+  
+  function onDragEnd(result) {
     const { destination, source } = result;
 
     // If user tries to drop in an unknown destination
-    if (!destination) return;
+    if (!destination)
+      return;
 
     // if the user drags and drops back in the same position
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
+    if (destination.droppableId === source.droppableId &&
+      destination.index === source.index) {
       return;
     }
 
@@ -132,11 +134,12 @@ export default function Page({ params }: PageProps) {
     };
 
     setState(newState);
-  };
+  }
+
+
 
   return (
     <main className="secondary shade-2">
-      <style></style>
       <section className="w-full grid grid-cols-3 gap-4 mt-24 mb-24">
         <Back />
         <aside>

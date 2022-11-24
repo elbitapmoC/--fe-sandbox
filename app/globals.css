@@ -42,6 +42,10 @@ body {
   background-color: var(--color-shade-5);
 }
 
+.main, .secondary {
+  transition: all .3s ease-in-out;
+}
+
 .main {
   justify-content: center;
   flex-direction: column;
@@ -106,7 +110,6 @@ body {
 .button {
   background-color: var(--color-shade-4);
   color: var(--color-shade-1);
-  transition: all .3s ease-in-out;
 }
 
 .button:hover {
@@ -114,6 +117,12 @@ body {
   cursor: pointer;
 }
 
-ul {
-  min-height: 96px;
+.border-lime{
+  border: 2px solid var(--color-shade-2);
+}
+
+.drop-zone {
+  max-height: 50vh;
+  height: 100%;
+  overflow: scroll;
 }

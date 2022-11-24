@@ -1,17 +1,11 @@
 const initialData = {
   tasks: {
-    1: { id: 1, content: "Configure Next.js application" },
-    2: { id: 2, content: "Configure Next.js and tailwind " },
-    3: { id: 3, content: "Create sidebar navigation menu" },
-    4: { id: 4, content: "Create page footer" },
-    5: { id: 5, content: "Create page navigation menu" },
-    6: { id: 6, content: "Create page layout" },
   },
   columns: {
     "column-1": {
       id: "column-1",
       title: "In progress",
-      taskIds: [1, 2, 3, 4, 5, 6],
+      taskIds: [],
     },
     "column-2": {
       id: "column-2",
@@ -29,3 +23,12 @@ const initialData = {
 };
 
 export default initialData
+
+// repo
+// id: 215145057
+
+// branches
+// id: name: "feat/gitpod-cypress"
+// name: name: "feat/gitpod-cypress"
+
+// 215145057: {id: "feat/gitpod-cypress", name: "feat/gitpod-cypress"}
