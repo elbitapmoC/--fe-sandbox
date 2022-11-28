@@ -1,6 +1,5 @@
 'use client';
 import { DragDropContext } from "react-beautiful-dnd";
-import uuid from 'react-uuid';
 
 import Back from "../../../(icons)/back";
 import Stargazers from "../../../(icons)/stargazers";
@@ -12,6 +11,7 @@ import initialData from "../../../initial-data";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
+import { useEffect } from "react";
 
 const reorderColumnList = (sourceCol, startIndex, endIndex) => {
   const newTaskIds = Array.from(sourceCol.taskIds);
@@ -31,6 +31,18 @@ export default function Page({ params }) {
   const [state, setState] = useState(initialData);
 
   const {
+    isLoading: loadingRepoBranches,
+    error: errorRepoBranches,
+    data: branchesData,
+  } = useQuery(
+    ['branches'],
+    () =>
+      axios
+        .get(`https://api.github.com/repos/${owner}/${repo}/branches`)
+        .then((res) => res.data)
+  );
+
+  const {
     isLoading: loadingRepo,
     error: errorRepo,
     data: repoData,
@@ -40,41 +52,35 @@ export default function Page({ params }) {
       .then((res) => res.data)
   );
 
-  const {
-    isLoading: loadingRepoBranches,
-    error: errorRepoBranches,
-    data: branchesData,
-  } = useQuery(
-    ['branches'],
-    () =>
-      axios
-        .get(`https://api.github.com/repos/${owner}/${repo}/branches`)
-        .then((res) => res.data),
-    {
-      enabled: repoData && Object.keys(repoData).length > 0
-    }
-  );
+  const initializeBranches = (branches) => {
+    branches.forEach((branch) => {
+      const data = { ...state };
+      const id = branch.commit.sha;
+      if(data.tasks[id] === id){
+        console.log('OLD 📰');
+      } else {
+        data.tasks[id] = branch;
+        data.columns["column-1"].taskIds.push(id);
+      }
+      setState(() => data);
+    });
+  }
 
+  useEffect(()=> {
+    if(branchesData){
+      initializeBranches(branchesData)
+    }
+  },[branchesData])
+  
   if (loadingRepo) return 'Loading Repository...';
   if (errorRepo) return 'An error has occurred: ' + errorRepo;
-
+  
   if (loadingRepoBranches) return 'Loading Branches...';
   if (errorRepoBranches) return 'An error has occurred: ' + errorRepoBranches;
 
   const { name, description, stargazers_count } = repoData;
-  const initializeBranches = () => {
-    branchesData.forEach((branch) => {
-      const id = uuid();
-      branch.id = id;
-      initialData.tasks[id] = branch;
-      initialData.columns["column-1"].taskIds.push(id);
-    });
-  }
-  if(branchesData){
-    initializeBranches();
-  }
   
-  function onDragEnd(result) {
+  const onDragEnd = (result) => {
     const { destination, source } = result;
 
     // If user tries to drop in an unknown destination
@@ -136,8 +142,6 @@ export default function Page({ params }) {
     setState(newState);
   }
 
-
-
   return (
     <main className="secondary shade-2">
       <section className="w-full grid grid-cols-3 gap-4 mt-24 mb-24">
@@ -151,10 +155,8 @@ export default function Page({ params }) {
 
       <section className="w-full grid grid-cols-3 gap-4">
         <DragDropContext onDragEnd={onDragEnd}>
-          {state.columnOrder.map((columnId) => {
-            const column = state.columns[columnId];
-            const tasks = column.taskIds.map((taskId) => state.tasks[taskId]);
-            return <Column key={column.id} column={column} tasks={tasks} />;
+          {state.columnOrder.map((columnId) => {    
+            return <Column key={columnId} column={state.columns[columnId]} tasks={state} setTasks={setState}/>;
           })}
         </DragDropContext>
       </section>

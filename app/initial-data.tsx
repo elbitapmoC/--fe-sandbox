@@ -1,6 +1,5 @@
 const initialData = {
-  tasks: {
-  },
+  tasks: [],
   columns: {
     "column-1": {
       id: "column-1",
@@ -23,12 +22,5 @@ const initialData = {
 };
 
 export default initialData
-
-// repo
-// id: 215145057
-
-// branches
-// id: name: "feat/gitpod-cypress"
-// name: name: "feat/gitpod-cypress"
 
 // 215145057: {id: "feat/gitpod-cypress", name: "feat/gitpod-cypress"}

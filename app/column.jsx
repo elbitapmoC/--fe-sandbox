@@ -2,22 +2,22 @@ import React from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd'
 
 const Column = ({ column, tasks }) => {
-  
   return (
     <article>
-      <p className='font-xs mb-4'>{column.title} ({tasks.length})</p>
+      <p className='font-xs mb-4'>{column.title} ({column.taskIds.length})</p>
       <Droppable droppableId={column.id} >
         {(droppableProvided) => (
           <aside className='drop-zone' ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>
-            {tasks.map((task, index) => (
-              <Draggable key={task.id} draggableId={`${task.id}`} index={index}>
+            {column.taskIds.map((ttt,i) => {
+              return (
+              <Draggable key={ttt} draggableId={ttt} index={i}>
                 {(draggableProvided, draggableSnapshot) => (
                   <blockquote className={`p-6 mb-2.5 button rounded text-center ${draggableSnapshot.isDragging ? 'border-lime' : null}`} ref={draggableProvided.innerRef} {...draggableProvided.draggableProps} {...draggableProvided.dragHandleProps}>
-                    {task.name}
+                    {tasks.tasks[ttt].name}
                   </blockquote>
                 )}
               </Draggable>
-            ))}
+            )})}
             {droppableProvided.placeholder}
           </aside>
         )}

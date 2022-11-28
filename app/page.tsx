@@ -42,7 +42,7 @@ export default function HomePage() {
   return (
     <main className="main">
       <ToggleLighting />
-      <section className="w-full grid grid-cols-3 gap-4">
+      <section className="w-full grid xl:grid-cols-3 sm:grid-cols-1 gap-4">
         <Nav />
         <aside className="col-span-2"><Title text="Start by pasting the repository URL" /></aside>
         <form className="grid grid--1fr--auto col-start-2 col-span-2 mt-24" onSubmit={handleSubmit}>
@@ -54,6 +54,3 @@ export default function HomePage() {
     </main>
   )
 }
-
-
-
