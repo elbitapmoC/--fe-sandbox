@@ -15,7 +15,7 @@ const ReactQueryWrapper = ({ children }: Props) => (
     <ThemeProvider defaultTheme='dark' >
       {children}
     </ThemeProvider>
-    <ReactQueryDevtools initialIsOpen />
+    <ReactQueryDevtools />
   </QueryClientProvider>
 )
 
