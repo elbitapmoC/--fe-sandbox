@@ -46,9 +46,10 @@ export default function HomePage() {
         <Nav />
         <aside className="col-span-2"><Title text="Start by pasting the repository URL" /></aside>
         <form className="grid grid--1fr--auto col-start-2 col-span-2 mt-24" onSubmit={handleSubmit}>
-          <input placeholder='https://' type="url" className='py-2 bg-transparent bb-1' onChange={handleChange} />
-          <input type="submit" value='Submit' className='ml-2.5 py-2 px-4 button rounded' />
-          {error === true ? <p className='pt-5 red'>Oops! Something went wrong. Try something like this:<br />https://github.com/freeCodeCamp/chapter</p> : null}
+          <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+          <input name="default-search" placeholder="https://" type="url" className="py-2 bg-transparent bb-1" onChange={handleChange} required />
+          <input type="submit" value="Submit" name="submit" className='ml-2.5 py-2 px-4 button rounded' />
+          {error === true ? <p className='pt-5 red'>Oops! Something went wrong. Try something like this:<br />https://github.com/CodeSandbox/Sandpack</p> : null}
         </form>
       </section>
     </main>

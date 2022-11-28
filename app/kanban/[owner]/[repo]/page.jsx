@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { DragDropContext } from "react-beautiful-dnd";
 
 import Back from "../../../(icons)/back";
@@ -10,8 +10,7 @@ import initialData from "../../../initial-data";
 
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const reorderColumnList = (sourceCol, startIndex, endIndex) => {
   const newTaskIds = Array.from(sourceCol.taskIds);
@@ -34,19 +33,17 @@ export default function Page({ params }) {
     isLoading: loadingRepoBranches,
     error: errorRepoBranches,
     data: branchesData,
-  } = useQuery(
-    ['branches'],
-    () =>
-      axios
-        .get(`https://api.github.com/repos/${owner}/${repo}/branches`)
-        .then((res) => res.data)
+  } = useQuery(["branches"], () =>
+    axios
+      .get(`https://api.github.com/repos/${owner}/${repo}/branches`)
+      .then((res) => res.data)
   );
 
   const {
     isLoading: loadingRepo,
     error: errorRepo,
     data: repoData,
-  } = useQuery(['repo'], () =>
+  } = useQuery(["repo"], () =>
     axios
       .get(`https://api.github.com/repos/${owner}/${repo}`)
       .then((res) => res.data)
@@ -56,40 +53,43 @@ export default function Page({ params }) {
     branches.forEach((branch) => {
       const data = { ...state };
       const id = branch.commit.sha;
-      if(data.tasks[id] === id){
-        console.log('OLD 📰');
-      } else {
+      // setState takes a time to update,
+      // by the
+
+      if (data.tasks[id]?.commit.sha !== id.toString()) {
         data.tasks[id] = branch;
         data.columns["column-1"].taskIds.push(id);
+        setState(() => data);
+        console.count(data);
       }
-      setState(() => data);
     });
-  }
+  };
 
-  useEffect(()=> {
-    if(branchesData){
-      initializeBranches(branchesData)
+  useEffect(() => {
+    if (branchesData) {
+      initializeBranches(branchesData);
     }
-  },[branchesData])
-  
-  if (loadingRepo) return 'Loading Repository...';
-  if (errorRepo) return 'An error has occurred: ' + errorRepo;
-  
-  if (loadingRepoBranches) return 'Loading Branches...';
-  if (errorRepoBranches) return 'An error has occurred: ' + errorRepoBranches;
+  }, [branchesData]);
+
+  if (loadingRepo) return "Loading Repository...";
+  if (errorRepo) return "An error has occurred: " + errorRepo;
+
+  if (loadingRepoBranches) return "Loading Branches...";
+  if (errorRepoBranches) return "An error has occurred: " + errorRepoBranches;
 
   const { name, description, stargazers_count } = repoData;
-  
+
   const onDragEnd = (result) => {
     const { destination, source } = result;
 
     // If user tries to drop in an unknown destination
-    if (!destination)
-      return;
+    if (!destination) return;
 
     // if the user drags and drops back in the same position
-    if (destination.droppableId === source.droppableId &&
-      destination.index === source.index) {
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
       return;
     }
 
@@ -140,11 +140,11 @@ export default function Page({ params }) {
     };
 
     setState(newState);
-  }
+  };
 
   return (
     <main className="secondary shade-2">
-      <section className="w-full grid grid-cols-3 gap-4 mt-24 mb-24">
+      <section className="mt-24 mb-24 grid w-full grid-cols-3 gap-4">
         <Back />
         <aside>
           <Title text={name} />
@@ -153,13 +153,20 @@ export default function Page({ params }) {
         <Stargazers gazers={stargazers_count} />
       </section>
 
-      <section className="w-full grid grid-cols-3 gap-4">
+      <section className="grid w-full grid-cols-3 gap-4">
         <DragDropContext onDragEnd={onDragEnd}>
-          {state.columnOrder.map((columnId) => {    
-            return <Column key={columnId} column={state.columns[columnId]} tasks={state} setTasks={setState}/>;
+          {state.columnOrder.map((columnId) => {
+            return (
+              <Column
+                key={columnId}
+                column={state.columns[columnId]}
+                tasks={state}
+                setTasks={setState}
+              />
+            );
           })}
         </DragDropContext>
       </section>
     </main>
-  )
+  );
 }
