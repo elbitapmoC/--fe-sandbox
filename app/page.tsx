@@ -33,6 +33,8 @@ export default function HomePage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // regex
+
     let ownerAndRepo = value.substring(value.indexOf('.com/') + 5); // codesandbox/sandpack
     let owner = ownerAndRepo.substring(0, ownerAndRepo.indexOf('/')); // codesandbox
     let repo = ownerAndRepo.substring(ownerAndRepo.indexOf('/') + 1); // sandpack;
